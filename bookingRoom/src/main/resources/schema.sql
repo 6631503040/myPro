@@ -1,0 +1,43 @@
+
+CREATE TABLE DIVISION (
+    divisionId BIGINT AUTO_INCREMENT PRIMARY KEY,
+    divisionName VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE USERS (
+    usersId BIGINT PRIMARY KEY,
+    usersName VARCHAR(50) NOT NULL,
+    usersType VARCHAR(50) NOT NULL,
+    usersMail VARCHAR(50) NOT NULL,
+    usersPhone VARCHAR(50) NOT NULL,
+    usersPassword VARCHAR(50) NOT NULL,
+    divisionId BIGINT,
+    CONSTRAINT fk_division FOREIGN KEY (divisionId) REFERENCES DIVISION(divisionId)  
+);
+
+CREATE TABLE DEPARTMENT (
+    depId BIGINT AUTO_INCREMENT PRIMARY KEY,
+    depName VARCHAR(250) NOT NULL ,
+    headDepId BIGINT NOT NULL,
+    CONSTRAINT fk_users FOREIGN KEY (headDepId) REFERENCES USERS(usersId)
+);
+
+
+CREATE TABLE BUILD (
+    buildId BIGINT AUTO_INCREMENT PRIMARY KEY,
+    buildName VARCHAR(50) NOT NULL
+);
+
+
+CREATE TABLE ROOM (
+    roomId BIGINT AUTO_INCREMENT PRIMARY KEY,
+    roomNum VARCHAR(100) NOT NULL,
+    capacity INT NOT NULL,
+    roomStatus VARCHAR(50),
+    buildId BIGINT, 
+    depId BIGINT,
+    CONSTRAINT fk_build FOREIGN KEY (buildId) REFERENCES BUILD(buildId),
+    CONSTRAINT fk_department FOREIGN KEY (depId) REFERENCES DEPARTMENT(depId)
+);
+
+
